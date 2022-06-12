@@ -12,7 +12,8 @@ BOT_NAME = 'ziprecruiter'
 SPIDER_MODULES = ['ziprecruiter.spiders']
 NEWSPIDER_MODULE = 'ziprecruiter.spiders'
 
-
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ziprecruiter (+http://www.yourdomain.com)'
 
@@ -88,8 +89,19 @@ ROBOTSTXT_OBEY = False
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 USER_AGENT = 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Googlebot/2.1; +http://www.google.com/bot.html) Chrome/92.0.4515.119 Safari/537.36'
 
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy_zyte_smartproxy.ZyteSmartProxyMiddleware': 610
+# }
+# ZYTE_SMARTPROXY_ENABLED = True
+# ZYTE_SMARTPROXY_APIKEY = 'YOUR_API_KEY'
+
+
+# Using Selenium to scrape the website
 DOWNLOADER_MIDDLEWARES = {
-    'scrapy_zyte_smartproxy.ZyteSmartProxyMiddleware': 610
+    'scrapy_selenium.SeleniumMiddleware': 800
 }
-ZYTE_SMARTPROXY_ENABLED = True
-ZYTE_SMARTPROXY_APIKEY = 'YOUR_API_KEY'
+
+
+SELENIUM_DRIVER_NAME = 'chrome'
+SELENIUM_DRIVER_EXECUTABLE_PATH = ChromeDriverManager().install()
+SELENIUM_DRIVER_ARGUMENTS=[]  # '--headless' if using chrome instead of firefox
